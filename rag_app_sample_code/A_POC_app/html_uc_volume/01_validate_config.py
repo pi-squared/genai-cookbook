@@ -37,14 +37,12 @@ browser_url = du.get_browser_hostname()
 
 # COMMAND ----------
 
-# Check if source location exists
-import os
-
-if os.path.isdir(SOURCE_PATH):
-    print(f"PASS: `{SOURCE_PATH}` exists")
-else:
-    print(f"FAIL: `{SOURCE_PATH}` does NOT exist")
-    raise ValueError("Please verify that `{SOURCE_PATH}` is a valid UC Volume")
+  try:
+      dbutils.fs.ls(SOURCE_PATH)
+      print(f"PASS: `{SOURCE_PATH}` exists")
+  except Exception as e:
+      print(f"FAIL: `{SOURCE_PATH}` does NOT exist")
+      raise ValueError(f"Please verify that `{SOURCE_PATH}` is a valid UC Volume: {str(e)}")
 
 # COMMAND ----------
 
